@@ -15,4 +15,13 @@ final class CachedFeedStoreImage: NSManagedObject {
 	@NSManaged internal var location: String?
 	@NSManaged internal var url: URL
 	@NSManaged internal var cache: Cache
+
+	internal var localFeedImage: LocalFeedImage {
+		return LocalFeedImage(
+			id: id,
+			description: imageDescription,
+			location: location,
+			url: url
+		)
+	}
 }
