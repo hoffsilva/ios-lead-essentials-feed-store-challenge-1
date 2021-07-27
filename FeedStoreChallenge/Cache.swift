@@ -23,4 +23,9 @@ final class Cache: NSManagedObject {
 		request.returnsObjectsAsFaults = false
 		return try context.fetch(request).first
 	}
+
+	internal static func create(in context: NSManagedObjectContext) throws -> Cache {
+		try get(in: context).map(context.delete)
+		return Cache(context: context)
+	}
 }
