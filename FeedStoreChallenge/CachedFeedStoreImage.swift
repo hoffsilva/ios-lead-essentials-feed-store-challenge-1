@@ -24,4 +24,18 @@ final class CachedFeedStoreImage: NSManagedObject {
 			url: url
 		)
 	}
+
+	internal static func transform(_ listOfLocalFeedImage: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
+		return NSOrderedSet(
+			array: listOfLocalFeedImage
+				.map { local in
+					let managed = CachedFeedStoreImage(context: context)
+					managed.id = local.id
+					managed.imageDescription = local.description
+					managed.location = local.location
+					managed.url = local.url
+					return managed
+				}
+		)
+	}
 }
