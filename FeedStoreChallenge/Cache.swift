@@ -12,4 +12,15 @@ import CoreData
 final class Cache: NSManagedObject {
 	@NSManaged internal var timestamp: Date
 	@NSManaged internal var cachedFeedStoreImage: NSOrderedSet
+
+	internal var localFeedStore: [LocalFeedImage] {
+		return cachedFeedStoreImage.compactMap { ($0 as? CachedFeedStoreImage)?.localFeedImage }
+	}
+
+	internal static func get(in context: NSManagedObjectContext) throws -> Cache? {
+		guard let cacheEntityName = entity().name else { return nil }
+		let request = NSFetchRequest<Cache>(entityName: cacheEntityName)
+		request.returnsObjectsAsFaults = false
+		return try context.fetch(request).first
+	}
 }
