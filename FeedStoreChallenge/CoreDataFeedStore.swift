@@ -29,7 +29,23 @@ public final class CoreDataFeedStore: FeedStore {
 	}
 
 	public func retrieve(completion: @escaping RetrievalCompletion) {
-		completion(.empty)
+		let context = self.context
+		context.perform {
+			do {
+				if let cache = try Cache.get(in: context) {
+					completion(
+						.found(
+							feed: cache.localFeedStore,
+							timestamp: cache.timestamp
+						)
+					)
+				} else {
+					completion(.empty)
+				}
+			} catch {
+				completion(.failure(error))
+			}
+		}
 	}
 
 	public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
