@@ -10,13 +10,13 @@ import CoreData
 
 @objc(CachedFeedStoreImage)
 final class CachedFeedStoreImage: NSManagedObject {
-	@NSManaged internal var id: UUID
-	@NSManaged internal var imageDescription: String?
-	@NSManaged internal var location: String?
-	@NSManaged internal var url: URL
-	@NSManaged internal var cache: Cache
+	@NSManaged var id: UUID
+	@NSManaged var imageDescription: String?
+	@NSManaged var location: String?
+	@NSManaged var url: URL
+	@NSManaged var cache: Cache
 
-	internal var localFeedImage: LocalFeedImage {
+	var localFeedImage: LocalFeedImage {
 		return LocalFeedImage(
 			id: id,
 			description: imageDescription,
@@ -25,7 +25,7 @@ final class CachedFeedStoreImage: NSManagedObject {
 		)
 	}
 
-	internal static func transform(_ listOfLocalFeedImage: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
+	static func transform(_ listOfLocalFeedImage: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
 		return NSOrderedSet(
 			array: listOfLocalFeedImage
 				.map { local in

@@ -10,21 +10,21 @@ import CoreData
 
 @objc(Cache)
 final class Cache: NSManagedObject {
-	@NSManaged internal var timestamp: Date
-	@NSManaged internal var cachedFeedStoreImage: NSOrderedSet
+	@NSManaged var timestamp: Date
+	@NSManaged var cachedFeedStoreImage: NSOrderedSet
 
-	internal var localFeedStore: [LocalFeedImage] {
+	var localFeedStore: [LocalFeedImage] {
 		return cachedFeedStoreImage.compactMap { ($0 as? CachedFeedStoreImage)?.localFeedImage }
 	}
 
-	internal static func get(in context: NSManagedObjectContext) throws -> Cache? {
+	static func get(in context: NSManagedObjectContext) throws -> Cache? {
 		guard let cacheEntityName = entity().name else { return nil }
 		let request = NSFetchRequest<Cache>(entityName: cacheEntityName)
 		request.returnsObjectsAsFaults = false
 		return try context.fetch(request).first
 	}
 
-	internal static func create(in context: NSManagedObjectContext) throws -> Cache {
+	static func create(in context: NSManagedObjectContext) throws -> Cache {
 		try get(in: context).map(context.delete)
 		return Cache(context: context)
 	}
