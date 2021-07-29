@@ -54,7 +54,7 @@ public final class CoreDataFeedStore: FeedStore {
 			do {
 				let newCache = try Cache.create(in: context)
 				newCache.timestamp = timestamp
-				newCache.cachedFeedStoreImage = CachedFeedStoreImage.transform(feed, in: context)
+				newCache.images = CachedFeedStoreImage.transform(feed, in: context)
 				try context.save()
 				completion(nil)
 			} catch {

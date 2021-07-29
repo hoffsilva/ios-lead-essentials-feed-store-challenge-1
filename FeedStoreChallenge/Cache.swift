@@ -11,10 +11,10 @@ import CoreData
 @objc(Cache)
 final class Cache: NSManagedObject {
 	@NSManaged var timestamp: Date
-	@NSManaged var cachedFeedStoreImage: NSOrderedSet
+	@NSManaged var images: NSOrderedSet
 
 	var localFeedStore: [LocalFeedImage] {
-		return cachedFeedStoreImage.compactMap { ($0 as? CachedFeedStoreImage)?.localFeedImage }
+		return images.compactMap { ($0 as? CachedFeedStoreImage)?.localFeedImage }
 	}
 
 	static func get(in context: NSManagedObjectContext) throws -> Cache? {
