@@ -14,7 +14,7 @@ final class CachedFeedStoreImage: NSManagedObject {
 	@NSManaged var imageDescription: String?
 	@NSManaged var location: String?
 	@NSManaged var url: URL
-	@NSManaged var cache: Cache
+	@NSManaged var cache: Cache?
 
 	var localFeedImage: LocalFeedImage {
 		return LocalFeedImage(
